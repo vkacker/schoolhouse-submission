@@ -1,7 +1,7 @@
 import React from 'react';
 import { Flex, Heading, Text, Center, Button, Spacer } from '@chakra-ui/react';
 import { AddIcon, RepeatIcon } from '@chakra-ui/icons';
-const SectionHeader = () => {
+const SectionHeader = ({ addModal, setAddModal }) => {
 	return (
 		<Flex
 			direction='column'
@@ -16,7 +16,11 @@ const SectionHeader = () => {
 				<Heading>Candidate Submissions</Heading>
 			</Flex>
 			<Flex py={3} maxW='30%'>
-				<Button colorScheme='blue' leftIcon={<AddIcon />}>
+				<Button
+					colorScheme='blue'
+					leftIcon={<AddIcon />}
+					onClick={() => setAddModal(!addModal)}
+				>
 					Add New Submission
 				</Button>
 				<Spacer />
