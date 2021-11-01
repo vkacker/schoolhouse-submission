@@ -1,6 +1,6 @@
 import React from 'react';
 import { Flex, Heading, Text, Center, Button } from '@chakra-ui/react';
-
+import { AddIcon, RepeatIcon } from '@chakra-ui/icons';
 const SectionHeader = () => {
 	return (
 		<Flex direction='column' width='100%' minH='150px' bg='#E9F7FF' px={4}>
@@ -8,10 +8,10 @@ const SectionHeader = () => {
 				<Heading>Candidate Submissions</Heading>
 			</Flex>
 			<Flex>
-				<Button bg='#2A84EE' color='white'>
+				<Button colorScheme='blue' leftIcon={<AddIcon />}>
 					Add New Submission
 				</Button>
-				<Button bg='#40C846' color='white'>
+				<Button colorScheme='green' leftIcon={<RepeatIcon />}>
 					Create Candidate Pairs
 				</Button>
 			</Flex>

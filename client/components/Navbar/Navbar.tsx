@@ -1,5 +1,6 @@
 import React from 'react';
 import { Flex, Text } from '@chakra-ui/react';
+import Logo from './Logo/Logo';
 
 const Navbar = () => {
 	return (
@@ -16,7 +17,7 @@ const Navbar = () => {
 			px={4}
 		>
 			<Flex flex={{ base: 1 }} justify={{ base: 'center', md: 'start' }}>
-				<Text>Schoolhouse Logo goes here</Text>
+				<Logo style={{ fontSize: '120px' }} />
 			</Flex>
 		</Flex>
 	);
