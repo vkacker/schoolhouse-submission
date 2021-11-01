@@ -1,13 +1,13 @@
 import React from 'react';
 import { Flex, Text } from '@chakra-ui/react';
 
-const Header = () => {
+const Navbar = () => {
 	return (
 		<Flex
 			align='center'
 			borderBottom={2}
 			borderStyle='solid'
-			borderColor='gray.400'
+			borderColor='#CBD5E0'
 			width='100%'
 			color='gray.600'
 			bg='white'
@@ -22,4 +22,4 @@ const Header = () => {
 	);
 };
 
-export default Header;
+export default Navbar;
