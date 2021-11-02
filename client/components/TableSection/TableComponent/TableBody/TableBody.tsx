@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import {
 	Center,
 	Box,
@@ -13,43 +13,16 @@ import {
 	Link,
 } from '@chakra-ui/react';
 import TableRow from './TableRow./TableRow';
+import { SubmissionContext } from '../../../../context/context';
 
 const TableBody = () => {
 	// This data will be fetched from the database
 	// This data needs to be typed when integrating with GraphQL
-	const [data, setData] = useState([
-		{
-			subID: 'sub1',
-			topic: 'Algebra 1',
-			sessionLink: 'loom.com/a',
-			email: 'a@gmail.com',
-			badgeColor: 'blue',
-		},
-		{
-			subID: 'sub2',
-			topic: 'Algebra 1',
-			sessionLink: 'loom.com/a',
-			email: 'a@gmail.com',
-			badgeColor: 'blue',
-		},
-		{
-			subID: 'sub3',
-			topic: 'Algebra 1',
-			sessionLink: 'loom.com/a',
-			email: 'a@gmail.com',
-			badgeColor: 'blue',
-		},
-		{
-			subID: 'sub4',
-			topic: 'Calculus',
-			sessionLink: 'loom.com/a',
-			email: 'a@gmail.com',
-			badgeColor: 'purple',
-		},
-	]);
+	const { submissions } = useContext(SubmissionContext);
+
 	return (
 		<Tbody>
-			{data.map(({ subID, topic, sessionLink, email }) => {
+			{submissions.map(({ subID, topic, sessionLink, email }) => {
 				return (
 					<TableRow
 						subID={subID}

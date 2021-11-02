@@ -14,7 +14,7 @@ const TableComponent = () => {
 			mt='25px'
 			overflowY='scroll'
 		>
-			<Table variant='simple' size='lg'>
+			<Table variant='simple' size='sm'>
 				<TableHeader />
 				<TableBody />
 			</Table>

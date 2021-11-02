@@ -6,7 +6,9 @@ import { schema } from './graphql/schema';
 
 // Initialize Express App
 const app = express();
-app.use('*', cors());
+
+const corsOpts = cors({ origin: true });
+app.use(corsOpts);
 
 // Instantiate Apollo Server
 let apolloServer = null;

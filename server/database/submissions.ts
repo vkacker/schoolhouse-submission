@@ -8,13 +8,13 @@ type Submission = {
 export let submissionData: Submission[] = [
 	{
 		subID: 'sub1',
-		topic: 'Algebra',
+		topic: 'Algebra 1',
 		sessionLink: 'loom.com/a',
 		email: 'a@gmail.com',
 	},
 	{
 		subID: 'sub2',
-		topic: 'Algebra',
+		topic: 'Algebra 1',
 		sessionLink: 'loom.com/b',
 		email: 'b@gmail.com',
 	},
@@ -26,7 +26,7 @@ export let submissionData: Submission[] = [
 	},
 	{
 		subID: 'sub4',
-		topic: 'Algebra',
+		topic: 'Algebra 1',
 		sessionLink: 'loom.com/d',
 		email: 'd@gmail.com',
 	},
@@ -38,7 +38,7 @@ export let submissionData: Submission[] = [
 	},
 	{
 		subID: 'sub6',
-		topic: 'Algebra',
+		topic: 'Algebra 1',
 		sessionLink: 'loom.com/f',
 		email: 'f@gmail.com',
 	},

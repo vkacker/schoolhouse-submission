@@ -19,7 +19,10 @@ import {
 } from '@chakra-ui/react';
 import SectionHeader from '../components/SectionHeader/SectionHeader';
 import TableSection from '../components/TableSection/TableSection';
-import { useMemo, useState } from 'react';
+import { createContext, useMemo, useState } from 'react';
+
+import { ApolloClient, InMemoryCache, gql } from '@apollo/client';
+import { SubmissionContext } from '../context/context';
 
 /**
  * State Notes
@@ -34,8 +37,9 @@ import { useMemo, useState } from 'react';
  *
  */
 
-const Home: NextPage = () => {
-	// State should be brought in here and then distributed down via props and/or context
+const Home: NextPage = ({ submissionsList }) => {
+	// State is initially feteched from "database" and then put into a state hook
+	const [submissions, setSubmission] = useState(submissionsList);
 
 	const [addModal, setAddModal] = useState(false); // Used to control add modal
 	const [pairsModal, setPairsModal] = useState(false); // Used to control pairs modal
@@ -43,7 +47,10 @@ const Home: NextPage = () => {
 		<Flex direction='column' align='center' m='0 auto'>
 			<Navbar />
 			<SectionHeader addModal={addModal} setAddModal={setAddModal} />
-			<TableSection />
+
+			<SubmissionContext.Provider value={{ submissions }}>
+				<TableSection />
+			</SubmissionContext.Provider>
 
 			{/* This Section will contain the Add and Pairings Modals*/}
 			<Modal isOpen={addModal} onClose={setAddModal}>
@@ -62,5 +69,31 @@ const Home: NextPage = () => {
 		</Flex>
 	);
 };
+
+export async function getStaticProps() {
+	const client = new ApolloClient({
+		uri: 'http://localhost:3001/graphql',
+		cache: new InMemoryCache(),
+	});
+
+	const { data } = await client.query({
+		query: gql`
+			query {
+				getAllSubmissions {
+					subID
+					topic
+					sessionLink
+					email
+				}
+			}
+		`,
+	});
+
+	return {
+		props: {
+			submissionsList: data.getAllSubmissions,
+		},
+	};
+}
 
 export default Home;

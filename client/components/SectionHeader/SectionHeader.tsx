@@ -6,16 +6,16 @@ const SectionHeader = ({ addModal, setAddModal }) => {
 		<Flex
 			direction='column'
 			width='100%'
-			minH='180px'
+			minH='100px'
 			bg='#E9F7FF'
 			px={10}
 			justify='center'
 			space
 		>
-			<Flex py={3}>
+			<Flex>
 				<Heading>Candidate Submissions</Heading>
 			</Flex>
-			<Flex py={3} maxW='30%'>
+			<Flex maxW='30%'>
 				<Button
 					colorScheme='blue'
 					leftIcon={<AddIcon />}
