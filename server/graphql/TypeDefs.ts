@@ -9,9 +9,17 @@ export const typeDefs = gql`
 		email: String!
 	}
 
+	type Pair {
+		reviewer: String!
+		reviewee: String!
+		topic: String!
+		validPair: Boolean!
+	}
+
 	# Queries - All the queries we want to make to this type
 	type Query {
 		getAllSubmissions: [Submission!]!
+		getCandidatePairs: [Pair!]!
 	}
 
 	# Mutations - All the changes we want to make to the data
