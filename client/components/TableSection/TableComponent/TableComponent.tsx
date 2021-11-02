@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Center, Box, Table } from '@chakra-ui/react';
+import { Box, Table } from '@chakra-ui/react';
 import TableHeader from './TableHeader/TableHeader';
 import TableBody from './TableBody/TableBody';
 

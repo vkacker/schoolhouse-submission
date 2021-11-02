@@ -1,17 +1,5 @@
 import React, { useContext, useState } from 'react';
-import {
-	Center,
-	Box,
-	Table,
-	Thead,
-	Tbody,
-	Tr,
-	Th,
-	Td,
-	Badge,
-	Text,
-	Link,
-} from '@chakra-ui/react';
+import { Tbody } from '@chakra-ui/react';
 import TableRow from './TableRow./TableRow';
 import { SubmissionContext } from '../../../../context/context';
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Flex, Heading, Text, Center, Button, Spacer } from '@chakra-ui/react';
+import { Flex, Heading, Text, Button, Spacer } from '@chakra-ui/react';
 import { AddIcon, RepeatIcon } from '@chakra-ui/icons';
 const SectionHeader = ({ addModal, setAddModal }) => {
 	return (

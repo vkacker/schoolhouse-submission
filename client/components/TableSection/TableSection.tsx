@@ -1,19 +1,6 @@
 import React from 'react';
 
-import {
-	Center,
-	Box,
-	Table,
-	Thead,
-	Tbody,
-	Tr,
-	Th,
-	Td,
-	Badge,
-	Text,
-	Link,
-} from '@chakra-ui/react';
-import { ExternalLinkIcon } from '@chakra-ui/icons';
+import { Center } from '@chakra-ui/react';
 import TableComponent from './TableComponent/TableComponent';
 
 const TableSection = () => {
