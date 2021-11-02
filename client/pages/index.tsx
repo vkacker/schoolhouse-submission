@@ -23,6 +23,7 @@ import { createContext, useMemo, useState } from 'react';
 
 import { ApolloClient, InMemoryCache, gql } from '@apollo/client';
 import { SubmissionContext } from '../context/context';
+import CandidatePairModal from '../components/CandidatePairModal/CandidatePairModal';
 
 /**
  * State Notes
@@ -46,26 +47,24 @@ const Home: NextPage = ({ submissionsList }) => {
 	return (
 		<Flex direction='column' align='center' m='0 auto'>
 			<Navbar />
-			<SectionHeader addModal={addModal} setAddModal={setAddModal} />
+			<SectionHeader
+				addModal={addModal}
+				setAddModal={setAddModal}
+				pairsModal={pairsModal}
+				setPairsModal={setPairsModal}
+			/>
 
 			<SubmissionContext.Provider value={{ submissions }}>
 				<TableSection />
 			</SubmissionContext.Provider>
 
 			{/* This Section will contain the Add and Pairings Modals*/}
-			<Modal isOpen={addModal} onClose={setAddModal}>
-				<ModalOverlay />
-				<ModalContent>
-					<ModalHeader>Add New Submission</ModalHeader>
-					<ModalCloseButton />
-					<ModalBody></ModalBody>
-
-					<ModalFooter>
-						<Button>Confirm</Button>
-						<Button>Deny</Button>
-					</ModalFooter>
-				</ModalContent>
-			</Modal>
+			{pairsModal ? (
+				<CandidatePairModal
+					pairsModal={pairsModal}
+					setPairsModal={setPairsModal}
+				/>
+			) : null}
 		</Flex>
 	);
 };
@@ -88,7 +87,6 @@ export async function getStaticProps() {
 			}
 		`,
 	});
-
 	return {
 		props: {
 			submissionsList: data.getAllSubmissions,

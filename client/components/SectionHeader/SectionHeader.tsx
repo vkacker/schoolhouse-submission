@@ -1,7 +1,12 @@
 import React from 'react';
 import { Flex, Heading, Text, Button, Spacer } from '@chakra-ui/react';
 import { AddIcon, RepeatIcon } from '@chakra-ui/icons';
-const SectionHeader = ({ addModal, setAddModal }) => {
+const SectionHeader = ({
+	addModal,
+	setAddModal,
+	pairsModal,
+	setPairsModal,
+}) => {
 	return (
 		<Flex
 			direction='column'
@@ -24,7 +29,11 @@ const SectionHeader = ({ addModal, setAddModal }) => {
 					Add New Submission
 				</Button>
 				<Spacer />
-				<Button colorScheme='green' leftIcon={<RepeatIcon />}>
+				<Button
+					colorScheme='green'
+					leftIcon={<RepeatIcon />}
+					onClick={() => setPairsModal(!pairsModal)}
+				>
 					Create Candidate Pairs
 				</Button>
 			</Flex>
