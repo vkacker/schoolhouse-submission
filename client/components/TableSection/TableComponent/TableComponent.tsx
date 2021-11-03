@@ -9,12 +9,11 @@ const TableComponent = () => {
 		<Box
 			w='100%'
 			borderWidth='3px'
-			maxH='500px'
 			borderRadius='lg'
 			mt='25px'
 			overflowY='scroll'
 		>
-			<Table variant='simple' size='sm'>
+			<Table variant='simple' size='md'>
 				<TableHeader />
 				<TableBody />
 			</Table>

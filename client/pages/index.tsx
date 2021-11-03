@@ -41,7 +41,7 @@ import AddSubmissionModal from '../components/AddSubmissionModal/AddSubmissionMo
 
 const Home: NextPage = ({ submissionsList }) => {
 	// State is initially feteched from "database" and then put into a state hook
-	const [submissions, setSubmission] = useState(submissionsList);
+	const [submissions, setSubmissions] = useState(submissionsList);
 
 	const [addModal, setAddModal] = useState(false); // Used to control add modal
 	const [pairsModal, setPairsModal] = useState(false); // Used to control pairs modal
@@ -56,11 +56,11 @@ const Home: NextPage = ({ submissionsList }) => {
 				setPairsModal={setPairsModal}
 			/>
 
-			<SubmissionContext.Provider value={{ submissions }}>
+			<SubmissionContext.Provider value={{ submissions, setSubmissions }}>
+				<AddSubmissionModal addModal={addModal} setAddModal={setAddModal} />
+
 				<TableSection />
 			</SubmissionContext.Provider>
-
-			<AddSubmissionModal addModal={addModal} setAddModal={setAddModal} />
 
 			{/* This Section will contain the Add and Pairings Modals*/}
 			{pairsModal ? (
