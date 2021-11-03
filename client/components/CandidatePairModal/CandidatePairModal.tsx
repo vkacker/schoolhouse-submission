@@ -18,8 +18,10 @@ import {
 	Center,
 	Box,
 	CircularProgress,
+	Badge,
 } from '@chakra-ui/react';
 import { ApolloClient, InMemoryCache, gql } from '@apollo/client';
+import { renderColor } from '../../utils/renderColor';
 
 const CandidatePairModal = ({ pairsModal, setPairsModal }) => {
 	const [pairs, setPairs] = useState(null);
@@ -49,7 +51,7 @@ const CandidatePairModal = ({ pairsModal, setPairsModal }) => {
 	return (
 		<Modal isOpen={pairsModal} onClose={setPairsModal} isCentered size='xl'>
 			<ModalOverlay />
-			<ModalContent>
+			<ModalContent maxW='750px'>
 				<ModalHeader>Candidate Pairs</ModalHeader>
 				<ModalCloseButton />
 				<ModalBody>
@@ -65,7 +67,7 @@ const CandidatePairModal = ({ pairsModal, setPairsModal }) => {
 							{pairs == null ? (
 								<CircularProgress isIndeterminate color='blue.300' />
 							) : (
-								<Table variant='simple'>
+								<Table variant='simple' size='sm'>
 									<Thead>
 										<Tr>
 											<Th>Reviewer</Th>
@@ -76,12 +78,32 @@ const CandidatePairModal = ({ pairsModal, setPairsModal }) => {
 									</Thead>
 									<Tbody>
 										{pairs.map((pair) => {
+											const topicColor = renderColor(pair.topic);
+											const validColor = pair.validPair ? 'green' : 'red';
 											return (
 												<Tr>
 													<Td>{pair.reviewer}</Td>
 													<Td>{pair.reviewee}</Td>
-													<Td>{pair.topic}</Td>
-													<Td>{pair.validPair ? 'True' : 'False'}</Td>
+													<Td>
+														<Badge
+															p='2'
+															rounded='md'
+															fontSize='0.8rem'
+															colorScheme={topicColor}
+														>
+															{pair.topic}
+														</Badge>
+													</Td>
+													<Td>
+														<Badge
+															p='2'
+															rounded='md'
+															fontSize='0.8rem'
+															colorScheme={validColor}
+														>
+															{pair.validPair ? 'True' : 'False'}
+														</Badge>
+													</Td>
 												</Tr>
 											);
 										})}
@@ -92,10 +114,7 @@ const CandidatePairModal = ({ pairsModal, setPairsModal }) => {
 					</Center>
 				</ModalBody>
 
-				<ModalFooter>
-					<Button>Confirm</Button>
-					<Button>Deny</Button>
-				</ModalFooter>
+				<ModalFooter></ModalFooter>
 			</ModalContent>
 		</Modal>
 	);

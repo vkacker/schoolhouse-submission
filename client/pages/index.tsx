@@ -24,6 +24,7 @@ import { createContext, useMemo, useState } from 'react';
 import { ApolloClient, InMemoryCache, gql } from '@apollo/client';
 import { SubmissionContext } from '../context/context';
 import CandidatePairModal from '../components/CandidatePairModal/CandidatePairModal';
+import AddSubmissionModal from '../components/AddSubmissionModal/AddSubmissionModal';
 
 /**
  * State Notes
@@ -44,6 +45,7 @@ const Home: NextPage = ({ submissionsList }) => {
 
 	const [addModal, setAddModal] = useState(false); // Used to control add modal
 	const [pairsModal, setPairsModal] = useState(false); // Used to control pairs modal
+
 	return (
 		<Flex direction='column' align='center' m='0 auto'>
 			<Navbar />
@@ -57,6 +59,8 @@ const Home: NextPage = ({ submissionsList }) => {
 			<SubmissionContext.Provider value={{ submissions }}>
 				<TableSection />
 			</SubmissionContext.Provider>
+
+			<AddSubmissionModal addModal={addModal} setAddModal={setAddModal} />
 
 			{/* This Section will contain the Add and Pairings Modals*/}
 			{pairsModal ? (
