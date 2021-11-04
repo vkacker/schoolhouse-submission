@@ -5,7 +5,7 @@ import TableComponent from './TableComponent/TableComponent';
 
 const TableSection = () => {
 	return (
-		<Center width='70%'>
+		<Center width='73%'>
 			<TableComponent />
 		</Center>
 	);

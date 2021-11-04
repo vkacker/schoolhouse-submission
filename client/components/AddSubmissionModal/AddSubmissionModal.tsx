@@ -1,6 +1,9 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 
 import {
+	FormControl,
+	FormLabel,
+	FormErrorMessage,
 	Modal,
 	ModalOverlay,
 	ModalContent,
@@ -20,6 +23,7 @@ import {
 
 import { SubmissionContext } from '../../context/context';
 import { topicList } from '../../utils/topicList.ts';
+import { generateSubmissionID } from '../../utils/generateSubmissionID.ts';
 
 import { gql, useMutation } from '@apollo/client';
 
@@ -43,17 +47,17 @@ const ADD_SUBMISSION = gql`
 		}
 	}
 `;
-
-const AddSubmissionModal = ({ addModal, setAddModal }) => {
+const AddSubmissionModal = ({ addModal, setAddModal, subLength }) => {
 	const { submissions, setSubmissions } = useContext(SubmissionContext);
 
-	// const [addSubmission, { data, loading, error }] = useMutation(ADD_SUBMISSION);
+	const [displayAlert, setDisplayAlert] = useState(false);
+	const [errorMessage, setErrorMessage] = useState('');
 
 	const [newSubmission, setNewSubmission] = useState({
 		subID: `sub${submissions.length + 1}`,
 		topic: '',
-		sessionLink: '',
-		email: '',
+		sessionLink: null,
+		email: null,
 	});
 
 	const [addSubmission] = useMutation(ADD_SUBMISSION, {
@@ -69,10 +73,17 @@ const AddSubmissionModal = ({ addModal, setAddModal }) => {
 		setNewSubmission({ ...newSubmission, [e.target.id]: e.target.value });
 	};
 
-	const addNewSubmission = (e) => {
-		e.preventDefault();
+	const addNewSubmission = (values) => {
 		setSubmissions((oldSubmissions) => [...oldSubmissions, newSubmission]);
 		addSubmission();
+
+		// Clearing Submissions and Closing Modal
+		setNewSubmission({
+			subID: `sub${submissions.length + 1}`,
+			topic: '',
+			sessionLink: '',
+			email: '',
+		});
 		setAddModal(!addModal);
 	};
 
@@ -93,9 +104,7 @@ const AddSubmissionModal = ({ addModal, setAddModal }) => {
 						>
 							<Grid templateColumns='repeat(2, 2fr)' gap={6} p={4} py={8}>
 								<Box>
-									<Text fontWeight='bold'>
-										We took care of Submission ID for you :)
-									</Text>
+									<Text fontWeight='bold'>Submission ID</Text>
 									<Input
 										variant='filled'
 										value={newSubmission.subID}
@@ -103,9 +112,7 @@ const AddSubmissionModal = ({ addModal, setAddModal }) => {
 									/>
 								</Box>
 								<Box>
-									<Text fontWeight='bold'>
-										What topic is the submission for?
-									</Text>
+									<Text fontWeight='bold'>Topic</Text>
 									<Select
 										placeholder='Select Topic'
 										onChange={onChange}
@@ -117,7 +124,7 @@ const AddSubmissionModal = ({ addModal, setAddModal }) => {
 									</Select>
 								</Box>
 								<Box>
-									<Text fontWeight='bold'>What is the session link?</Text>
+									<Text fontWeight='bold'>Session Link</Text>
 									<Input
 										variant='outline'
 										placeholder='Enter session link'
@@ -127,7 +134,7 @@ const AddSubmissionModal = ({ addModal, setAddModal }) => {
 									/>
 								</Box>
 								<Box>
-									<Text fontWeight='bold'>What is the candidate e-mail?</Text>
+									<Text fontWeight='bold'>Candidate E-Mail</Text>
 									<Input
 										variant='outline'
 										placeholder='Enter canidate e-mail'

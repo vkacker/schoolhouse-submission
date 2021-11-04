@@ -7,7 +7,8 @@ import TableBody from './TableBody/TableBody';
 const TableComponent = () => {
 	return (
 		<Box
-			w='100%'
+			width='100%'
+			maxH='480px'
 			borderWidth='3px'
 			borderRadius='lg'
 			mt='25px'

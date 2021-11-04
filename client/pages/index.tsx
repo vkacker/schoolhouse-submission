@@ -75,7 +75,7 @@ const Home: NextPage = ({ submissionsList }) => {
 
 export async function getStaticProps() {
 	const client = new ApolloClient({
-		uri: 'http://localhost:3001/graphql',
+		uri: '/graphql',
 		cache: new InMemoryCache(),
 	});
 
