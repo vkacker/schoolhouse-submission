@@ -19,6 +19,7 @@ import {
 	Input,
 	Select,
 	Spacer,
+	useToast,
 } from '@chakra-ui/react';
 
 import { SubmissionContext } from '../../context/context';
@@ -48,6 +49,9 @@ const ADD_SUBMISSION = gql`
 	}
 `;
 const AddSubmissionModal = ({ addModal, setAddModal, subLength }) => {
+	useEffect(() => {
+		console.log('Modal loaded!');
+	}, []);
 	const { submissions, setSubmissions } = useContext(SubmissionContext);
 
 	const [displayAlert, setDisplayAlert] = useState(false);
@@ -60,12 +64,37 @@ const AddSubmissionModal = ({ addModal, setAddModal, subLength }) => {
 		email: null,
 	});
 
+	const toast = useToast();
+
 	const [addSubmission] = useMutation(ADD_SUBMISSION, {
 		variables: {
-			subID: newSubmission.subID,
+			subID: `sub${submissions.length + 1}`,
 			topic: newSubmission.topic,
 			sessionLink: newSubmission.sessionLink,
 			email: newSubmission.email,
+		},
+		onCompleted({ addSubmission }) {
+			const submissionObject = {
+				subID: addSubmission.subID,
+				topic: addSubmission.topic,
+				sessionLink: addSubmission.sessionLink,
+				email: addSubmission.email,
+			};
+
+			setSubmissions([...submissions, submissionObject]);
+
+			setNewSubmission;
+
+			setAddModal(!addModal);
+		},
+		onError(error) {
+			toast({
+				title: 'Error',
+				description: 'Please complete all fields',
+				status: 'error',
+				duration: 2500,
+				isClosable: true,
+			});
 		},
 	});
 
@@ -73,18 +102,20 @@ const AddSubmissionModal = ({ addModal, setAddModal, subLength }) => {
 		setNewSubmission({ ...newSubmission, [e.target.id]: e.target.value });
 	};
 
-	const addNewSubmission = (values) => {
-		setSubmissions((oldSubmissions) => [...oldSubmissions, newSubmission]);
-		addSubmission();
+	const addSubmissionHandler = (e) => {
+		e.preventDefault();
 
-		// Clearing Submissions and Closing Modal
-		setNewSubmission({
-			subID: `sub${submissions.length + 1}`,
-			topic: '',
-			sessionLink: '',
-			email: '',
-		});
-		setAddModal(!addModal);
+		if (newSubmission.topic === '') {
+			toast({
+				title: 'Error',
+				description: 'Please complete all fields',
+				status: 'error',
+				duration: 2500,
+				isClosable: true,
+			});
+		} else {
+			addSubmission();
+		}
 	};
 
 	return (
@@ -152,7 +183,7 @@ const AddSubmissionModal = ({ addModal, setAddModal, subLength }) => {
 						Cancel
 					</Button>
 					<Spacer />
-					<Button colorScheme='green' onClick={addNewSubmission}>
+					<Button colorScheme='green' onClick={addSubmissionHandler}>
 						Confirm
 					</Button>
 				</ModalFooter>

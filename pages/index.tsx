@@ -57,12 +57,12 @@ const Home: NextPage = ({ submissionsList }) => {
 			/>
 
 			<SubmissionContext.Provider value={{ submissions, setSubmissions }}>
-				<AddSubmissionModal addModal={addModal} setAddModal={setAddModal} />
-
+				{addModal ? (
+					<AddSubmissionModal addModal={addModal} setAddModal={setAddModal} />
+				) : null}
 				<TableSection />
 			</SubmissionContext.Provider>
 
-			{/* This Section will contain the Add and Pairings Modals*/}
 			{pairsModal ? (
 				<CandidatePairModal
 					pairsModal={pairsModal}
