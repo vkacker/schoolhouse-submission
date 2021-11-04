@@ -23,10 +23,10 @@ import {
 } from '@chakra-ui/react';
 
 import { SubmissionContext } from '../../context/context';
-import { topicList } from '../../utils/topicList.ts';
-import { generateSubmissionID } from '../../utils/generateSubmissionID.ts';
+import { topicList } from '../../utils/topicList';
 
 import { gql, useMutation } from '@apollo/client';
+import { NextPage } from 'next';
 
 const ADD_SUBMISSION = gql`
 	mutation AddSubmissionMutation(
@@ -48,20 +48,34 @@ const ADD_SUBMISSION = gql`
 		}
 	}
 `;
-const AddSubmissionModal = ({ addModal, setAddModal, subLength }) => {
-	useEffect(() => {
-		console.log('Modal loaded!');
-	}, []);
-	const { submissions, setSubmissions } = useContext(SubmissionContext);
 
-	const [displayAlert, setDisplayAlert] = useState(false);
-	const [errorMessage, setErrorMessage] = useState('');
+// Interface
+interface AddSubmissionModalProps {
+	addModal: boolean;
+	setAddModal: React.Dispatch<React.SetStateAction<boolean>>;
+}
 
-	const [newSubmission, setNewSubmission] = useState({
+// Interface for Submissions
+interface Submission {
+	subID: string;
+	topic: string;
+	sessionLink: string | number | readonly string[] | undefined;
+	email: string | number | readonly string[] | undefined;
+}
+
+// Interface
+
+const AddSubmissionModal: NextPage<AddSubmissionModalProps> = ({
+	addModal,
+	setAddModal,
+}) => {
+	const { submissions, setSubmissions } = useContext<any>(SubmissionContext);
+
+	const [newSubmission, setNewSubmission] = useState<Submission>({
 		subID: `sub${submissions.length + 1}`,
 		topic: '',
-		sessionLink: null,
-		email: null,
+		sessionLink: undefined,
+		email: undefined,
 	});
 
 	const toast = useToast();
@@ -98,11 +112,11 @@ const AddSubmissionModal = ({ addModal, setAddModal, subLength }) => {
 		},
 	});
 
-	const onChange = (e) => {
+	const onChange = (e: any) => {
 		setNewSubmission({ ...newSubmission, [e.target.id]: e.target.value });
 	};
 
-	const addSubmissionHandler = (e) => {
+	const addSubmissionHandler = (e: any) => {
 		e.preventDefault();
 
 		if (newSubmission.topic === '') {
@@ -119,7 +133,7 @@ const AddSubmissionModal = ({ addModal, setAddModal, subLength }) => {
 	};
 
 	return (
-		<Modal isOpen={addModal} onClose={setAddModal} isCentered>
+		<Modal isOpen={addModal} onClose={() => setAddModal(!addModal)} isCentered>
 			<ModalOverlay />
 			<ModalContent maxW='750px'>
 				<ModalBody>
@@ -150,7 +164,11 @@ const AddSubmissionModal = ({ addModal, setAddModal, subLength }) => {
 										id='topic'
 									>
 										{topicList.map((topic) => {
-											return <option value={topic}>{topic}</option>;
+											return (
+												<option key={topic} value={topic}>
+													{topic}
+												</option>
+											);
 										})}
 									</Select>
 								</Box>
@@ -170,6 +188,7 @@ const AddSubmissionModal = ({ addModal, setAddModal, subLength }) => {
 										variant='outline'
 										placeholder='Enter canidate e-mail'
 										id='email'
+										type='text'
 										value={newSubmission.email}
 										onChange={onChange}
 									/>

@@ -1,25 +1,12 @@
-import type { NextPage } from 'next';
+import { NextPage } from 'next';
 import Image from 'next/image';
 
 import Navbar from '../components/Navbar/Navbar';
 
-import {
-	Button,
-	Center,
-	Flex,
-	Grid,
-	Modal,
-	ModalBody,
-	ModalCloseButton,
-	ModalContent,
-	ModalFooter,
-	ModalHeader,
-	ModalOverlay,
-	useDisclosure,
-} from '@chakra-ui/react';
+import { Flex } from '@chakra-ui/react';
 import SectionHeader from '../components/SectionHeader/SectionHeader';
 import TableSection from '../components/TableSection/TableSection';
-import { createContext, useMemo, useState } from 'react';
+import { createContext, useEffect, useMemo, useState } from 'react';
 
 import { ApolloClient, InMemoryCache, gql } from '@apollo/client';
 import { SubmissionContext } from '../context/context';
@@ -39,9 +26,45 @@ import AddSubmissionModal from '../components/AddSubmissionModal/AddSubmissionMo
  *
  */
 
-const Home: NextPage = ({ submissionsList }) => {
+type Submission = {
+	subID: string;
+	topic: string;
+	sessionLink: string;
+	email: string;
+};
+
+// interface HomeProps {
+// 	submissionsList: Submission[];
+// }
+
+const Home: NextPage = () => {
 	// State is initially feteched from "database" and then put into a state hook
-	const [submissions, setSubmissions] = useState(submissionsList);
+	const [submissions, setSubmissions] = useState<any[]>([]);
+	useEffect(() => {
+		const fetchSubmissions = async () => {
+			const client = new ApolloClient({
+				uri: 'http://localhost:3000/api/graphql',
+				cache: new InMemoryCache(),
+			});
+
+			const { data } = await client.query({
+				query: gql`
+					query {
+						getAllSubmissions {
+							subID
+							topic
+							sessionLink
+							email
+						}
+					}
+				`,
+			});
+
+			setSubmissions(data.getAllSubmissions);
+		};
+
+		fetchSubmissions();
+	}, []);
 
 	const [addModal, setAddModal] = useState(false); // Used to control add modal
 	const [pairsModal, setPairsModal] = useState(false); // Used to control pairs modal
@@ -72,30 +95,5 @@ const Home: NextPage = ({ submissionsList }) => {
 		</Flex>
 	);
 };
-
-export async function getStaticProps() {
-	const client = new ApolloClient({
-		uri: 'http://localhost:3000/api/graphql',
-		cache: new InMemoryCache(),
-	});
-
-	const { data } = await client.query({
-		query: gql`
-			query {
-				getAllSubmissions {
-					subID
-					topic
-					sessionLink
-					email
-				}
-			}
-		`,
-	});
-	return {
-		props: {
-			submissionsList: data.getAllSubmissions,
-		},
-	};
-}
 
 export default Home;

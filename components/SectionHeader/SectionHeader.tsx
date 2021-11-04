@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 import {
 	Flex,
 	Heading,
@@ -12,7 +12,15 @@ import {
 	Container,
 } from '@chakra-ui/react';
 import { AddIcon, RepeatIcon } from '@chakra-ui/icons';
-const SectionHeader = ({
+
+interface SectionHeaderProps {
+	addModal: boolean;
+	setAddModal: React.Dispatch<React.SetStateAction<boolean>>;
+	pairsModal: boolean;
+	setPairsModal: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const SectionHeader: FC<SectionHeaderProps> = ({
 	addModal,
 	setAddModal,
 	pairsModal,
@@ -42,23 +50,6 @@ const SectionHeader = ({
 								Create Candidate Pairs
 							</Button>
 						</HStack>
-						{/* <Flex>
-							<Button
-								colorScheme='blue'
-								leftIcon={<AddIcon />}
-								onClick={() => setAddModal(!addModal)}
-							>
-								Add New Submission
-							</Button>
-							<Spacer />
-							<Button
-								colorScheme='green'
-								leftIcon={<RepeatIcon />}
-								onClick={() => setPairsModal(!pairsModal)}
-							>
-								Create Candidate Pairs
-							</Button>
-						</Flex> */}
 					</Stack>
 				</Flex>
 			</Container>

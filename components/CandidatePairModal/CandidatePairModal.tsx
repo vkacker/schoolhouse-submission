@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 
 import {
 	Modal,
@@ -20,36 +20,60 @@ import {
 	CircularProgress,
 	Badge,
 } from '@chakra-ui/react';
-import { ApolloClient, InMemoryCache, gql } from '@apollo/client';
+import { ApolloClient, InMemoryCache, gql, useQuery } from '@apollo/client';
 import { renderColor } from '../../utils/renderColor';
 
-const CandidatePairModal = ({ pairsModal, setPairsModal }) => {
-	const [pairs, setPairs] = useState(null);
+// Interface
+interface CandidatePairModalProps {
+	pairsModal: boolean;
+	setPairsModal: React.Dispatch<React.SetStateAction<boolean>>;
+}
 
-	useEffect(async () => {
-		const client = new ApolloClient({
-			uri: 'http://localhost:3000/api/graphql',
-			cache: new InMemoryCache(),
-		});
+type Pair = {
+	reviewer: string;
+	reviewee: string;
+	topic: string;
+	validPair: boolean;
+};
 
-		const { data } = await client.query({
-			query: gql`
-				query {
-					getCandidatePairs {
-						reviewer
-						reviewee
-						topic
-						validPair
+const CandidatePairModal: FC<CandidatePairModalProps> = ({
+	pairsModal,
+	setPairsModal,
+}) => {
+	const [pairs, setPairs] = useState<Pair[]>([]);
+
+	useEffect(() => {
+		const fetchData = async () => {
+			const client = new ApolloClient({
+				uri: 'http://localhost:3000/api/graphql',
+				cache: new InMemoryCache(),
+			});
+			const { data } = await client.query({
+				query: gql`
+					query {
+						getCandidatePairs {
+							reviewer
+							reviewee
+							topic
+							validPair
+						}
 					}
-				}
-			`,
-		});
-		setPairs(data.getCandidatePairs);
+				`,
+			});
+			setPairs(data.getCandidatePairs);
+		};
+
+		fetchData();
 	}, []);
 	console.log(pairs);
 
 	return (
-		<Modal isOpen={pairsModal} onClose={setPairsModal} isCentered size='xl'>
+		<Modal
+			isOpen={pairsModal}
+			onClose={() => setPairsModal(!pairsModal)}
+			isCentered
+			size='xl'
+		>
 			<ModalOverlay />
 			<ModalContent maxW='750px'>
 				<ModalHeader>Candidate Pairs</ModalHeader>
@@ -64,7 +88,7 @@ const CandidatePairModal = ({ pairsModal, setPairsModal }) => {
 							mt='25px'
 							overflowY='scroll'
 						>
-							{pairs == null ? (
+							{pairs == undefined ? (
 								<CircularProgress isIndeterminate color='blue.300' />
 							) : (
 								<Table variant='simple' size='sm'>
@@ -77,11 +101,11 @@ const CandidatePairModal = ({ pairsModal, setPairsModal }) => {
 										</Tr>
 									</Thead>
 									<Tbody>
-										{pairs.map((pair) => {
+										{pairs.map((pair: any, index: number) => {
 											const topicColor = renderColor(pair.topic);
 											const validColor = pair.validPair ? 'green' : 'red';
 											return (
-												<Tr>
+												<Tr key={index}>
 													<Td>{pair.reviewer}</Td>
 													<Td>{pair.reviewee}</Td>
 													<Td>

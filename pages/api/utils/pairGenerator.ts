@@ -1,6 +1,13 @@
-export const pairGenerator = (submissionData) => {
+interface Submission {
+	subID: string;
+	topic: string;
+	sessionLink: string;
+	email: string;
+}
+
+export const pairGenerator = (submissionData: Submission[]) => {
 	// Separating by Topic
-	let topicDict = {};
+	let topicDict: any = {};
 
 	submissionData.forEach((submissionObject) => {
 		let hasKey = submissionObject.topic in topicDict;

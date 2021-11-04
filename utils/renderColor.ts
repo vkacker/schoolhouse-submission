@@ -1,4 +1,4 @@
-export const renderColor = (topic: any) => {
+export const renderColor = (topic: string) => {
 	switch (topic.toLowerCase()) {
 		case 'pre-algebra':
 		case 'algebra 1':
