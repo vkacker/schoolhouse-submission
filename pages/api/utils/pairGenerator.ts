@@ -1,3 +1,4 @@
+// Type for Submission
 interface Submission {
 	subID: string;
 	topic: string;
@@ -20,11 +21,14 @@ export const pairGenerator = (submissionData: Submission[]) => {
 	// Creating Pairs
 	let pairArray = [];
 
+	// Go through each key in the topic dictionary
 	for (let key in topicDict) {
+		// Shuffle the array
 		let topic = key;
 		let topic_array = topicDict[topic];
 		topic_array = topic_array.sort(() => Math.random() - 0.5);
 
+		// If only one person in topic, then cannot make pair, thus invalid
 		if (topic_array.length == 1) {
 			let submissionID = topic_array[0].subID;
 			let pair = {
@@ -36,6 +40,9 @@ export const pairGenerator = (submissionData: Submission[]) => {
 			pairArray.push(pair);
 			continue;
 		}
+
+		// Go through the topic array and make pairs
+		// Pairs are created by generating a Cn graph
 		for (let i = 0; i < topic_array.length; i++) {
 			// Variable Definitions
 			let reviewerID = null;

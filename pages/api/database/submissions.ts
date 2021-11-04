@@ -1,3 +1,4 @@
+// Type for Submission
 type Submission = {
 	subID: string;
 	topic: string;

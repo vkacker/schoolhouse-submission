@@ -1,8 +1,11 @@
-import React from 'react';
+// React Imports
+import React, { FC } from 'react';
+
+// UI Imports
 import { Flex } from '@chakra-ui/react';
 import Logo from './Logo/Logo';
 
-const Navbar = () => {
+const Navbar: FC = () => {
 	return (
 		<Flex
 			align='center'

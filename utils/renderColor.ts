@@ -1,3 +1,4 @@
+// Function to generate color for Badge
 export const renderColor = (topic: string) => {
 	switch (topic.toLowerCase()) {
 		case 'pre-algebra':

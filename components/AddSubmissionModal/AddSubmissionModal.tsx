@@ -23,6 +23,7 @@ import { SubmissionContext } from '../../context/context';
 // GraphQL Imports
 import { gql, useMutation } from '@apollo/client';
 
+// GraphQL Mutation for Adding Submissions
 const ADD_SUBMISSION = gql`
 	mutation AddSubmissionMutation(
 		$subID: String!
@@ -91,6 +92,7 @@ const AddSubmissionModal: FC<AddSubmissionModalProps> = ({
 			email: newSubmission.email,
 		},
 		onCompleted({ addSubmission }) {
+			// Creating an object to add to the submissions array, setting the submissions, and closing modal
 			const submissionObject = {
 				subID: addSubmission.subID,
 				topic: addSubmission.topic,
@@ -100,11 +102,10 @@ const AddSubmissionModal: FC<AddSubmissionModalProps> = ({
 
 			setSubmissions([...submissions, submissionObject]);
 
-			setNewSubmission;
-
 			setAddModal(!addModal);
 		},
 		onError(error) {
+			// Displaying error
 			toast({
 				title: 'Error',
 				description: 'Please complete all fields',
@@ -115,15 +116,24 @@ const AddSubmissionModal: FC<AddSubmissionModalProps> = ({
 		},
 	});
 
-	// Event Handlers
+	/**
+	 * Event Handlers
+	 */
+
+	// Event Handler for inputs
 	const onChange = (e: any) => {
 		setNewSubmission({ ...newSubmission, [e.target.id]: e.target.value });
 	};
 
+	// Event Handler for submitting form
 	const addSubmissionHandler = (e: any) => {
 		e.preventDefault();
 
-		if (newSubmission.topic === '') {
+		if (
+			newSubmission.topic === '' ||
+			newSubmission.sessionLink === '' ||
+			newSubmission.email === ''
+		) {
 			toast({
 				title: 'Error',
 				description: 'Please complete all fields',

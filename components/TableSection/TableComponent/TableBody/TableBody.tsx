@@ -1,6 +1,11 @@
+// React Imports
 import React, { FC, useContext, useState } from 'react';
+
+// UI Imports
 import { Tbody } from '@chakra-ui/react';
 import TableRow from './TableRow/TableRow';
+
+// Context Imports
 import { SubmissionContext } from '../../../../context/context';
 
 // Interface for Submissions
@@ -12,8 +17,7 @@ type Submission = {
 };
 
 const TableBody: FC = () => {
-	// This data will be fetched from the database
-	// This data needs to be typed when integrating with GraphQL
+	// Obtaining Data from context
 	const { submissions } = useContext<any>(SubmissionContext);
 
 	return (

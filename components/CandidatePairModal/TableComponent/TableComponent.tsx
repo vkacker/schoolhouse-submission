@@ -1,8 +1,13 @@
+// React Imports
 import React, { FC } from 'react';
 
+// UI Imports
 import { Table, Thead, Tbody, Tr, Th, Td, Badge } from '@chakra-ui/react';
+
+// Util Imports
 import { renderColor } from '../../../utils/renderColor';
 
+// Type for Pair
 type Pair = {
 	reviewer: string;
 	reviewee: string;
@@ -10,6 +15,7 @@ type Pair = {
 	validPair: boolean;
 };
 
+// Interface for Props
 interface TableComponentProps {
 	pairs: Pair[];
 }

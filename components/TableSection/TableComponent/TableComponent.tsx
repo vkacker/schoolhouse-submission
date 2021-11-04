@@ -1,10 +1,12 @@
-import React from 'react';
+// React Imports
+import React, { FC } from 'react';
 
+// UI Imports
 import { Box, Table } from '@chakra-ui/react';
 import TableHeader from './TableHeader/TableHeader';
 import TableBody from './TableBody/TableBody';
 
-const TableComponent = () => {
+const TableComponent: FC = () => {
 	return (
 		<Box
 			width='100%'

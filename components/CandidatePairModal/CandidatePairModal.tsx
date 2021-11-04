@@ -1,5 +1,7 @@
+// React Imports
 import React, { FC, useEffect, useState } from 'react';
 
+// UI Imports
 import {
 	Modal,
 	ModalOverlay,
@@ -12,16 +14,18 @@ import {
 	Box,
 	CircularProgress,
 } from '@chakra-ui/react';
-import { ApolloClient, InMemoryCache, gql } from '@apollo/client';
-
 import TableComponent from './TableComponent/TableComponent';
 
-// Interface
+// GraphQL Imports
+import { ApolloClient, InMemoryCache, gql } from '@apollo/client';
+
+// Interface for Props
 interface CandidatePairModalProps {
 	pairsModal: boolean;
 	setPairsModal: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
+// Type for Pair
 type Pair = {
 	reviewer: string;
 	reviewee: string;
@@ -33,9 +37,15 @@ const CandidatePairModal: FC<CandidatePairModalProps> = ({
 	pairsModal,
 	setPairsModal,
 }) => {
+	/**
+	 * State and Hook Declarations
+	 */
+	// State for Pairs
 	const [pairs, setPairs] = useState<Pair[]>([]);
 
+	// Obtaining candidate pairs on component load to display them
 	useEffect(() => {
+		// Function to allow it to work in useEffect
 		const fetchData = async () => {
 			const client = new ApolloClient({
 				uri: 'https://polar-ravine-66624.herokuapp.com/api/graphql',
@@ -57,9 +67,9 @@ const CandidatePairModal: FC<CandidatePairModalProps> = ({
 			setPairs(data.getCandidatePairs);
 		};
 
+		// Calling said function
 		fetchData();
 	}, []);
-	console.log(pairs);
 
 	return (
 		<Modal

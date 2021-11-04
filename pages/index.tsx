@@ -1,27 +1,27 @@
+// Next Imports
 import { NextPage } from 'next';
-
-import Navbar from '../components/Navbar/Navbar';
-
-import { Flex, CircularProgress } from '@chakra-ui/react';
-import SectionHeader from '../components/SectionHeader/SectionHeader';
-import TableSection from '../components/TableSection/TableSection';
+// React Imports
 import { useEffect, useState } from 'react';
 
-import { ApolloClient, InMemoryCache, gql } from '@apollo/client';
-import { SubmissionContext } from '../context/context';
+// UI Imports
+import { Flex, CircularProgress } from '@chakra-ui/react';
+import Navbar from '../components/Navbar/Navbar';
+import SectionHeader from '../components/SectionHeader/SectionHeader';
+import TableSection from '../components/TableSection/TableSection';
 import CandidatePairModal from '../components/CandidatePairModal/CandidatePairModal';
 import AddSubmissionModal from '../components/AddSubmissionModal/AddSubmissionModal';
 
+// GraphQL Imports
+import { ApolloClient, InMemoryCache, gql } from '@apollo/client';
+import { SubmissionContext } from '../context/context';
+
+// Type for Submission
 type Submission = {
 	subID: string;
 	topic: string;
 	sessionLink: string;
 	email: string;
 };
-
-// interface HomeProps {
-// 	submissionsList: Submission[];
-// }
 
 const Home: NextPage = () => {
 	// State is initially feteched from "database" and then put into a state hook

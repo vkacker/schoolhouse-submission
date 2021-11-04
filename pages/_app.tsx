@@ -1,7 +1,11 @@
+// Next Imports
 import Head from 'next/head';
 import type { AppProps } from 'next/app';
+
+// UI Imports
 import { ChakraProvider } from '@chakra-ui/react';
 
+// GraphQL Imports
 import {
 	ApolloClient,
 	InMemoryCache,
@@ -9,6 +13,7 @@ import {
 	gql,
 } from '@apollo/client';
 
+// Apollo Client
 const client = new ApolloClient({
 	uri: 'https://polar-ravine-66624.herokuapp.com/api/graphql',
 	// uri: 'http://localhost:3000/api/graphql',

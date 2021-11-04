@@ -1,8 +1,10 @@
-import React from 'react';
+// React Imports
+import React, { FC } from 'react';
 
+// UI Imports
 import { Thead, Tr, Th, Text } from '@chakra-ui/react';
 
-const TableHeader = () => {
+const TableHeader: FC = () => {
 	return (
 		<Thead>
 			<Tr>

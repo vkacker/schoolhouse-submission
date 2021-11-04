@@ -1,5 +1,7 @@
+// React Imports
 import React, { FC } from 'react';
 
+// UI Imports
 import {
 	Center,
 	Box,
@@ -14,8 +16,11 @@ import {
 	Link,
 } from '@chakra-ui/react';
 import { ExternalLinkIcon } from '@chakra-ui/icons';
+
+// Util Imports
 import { renderColor } from '../../../../../utils/renderColor';
 
+// Interface for Props
 interface TableRowProps {
 	subID: string;
 	topic: string;
@@ -24,6 +29,7 @@ interface TableRowProps {
 }
 
 const TableRow: FC<TableRowProps> = ({ subID, topic, sessionLink, email }) => {
+	// Obtaining badge color
 	const badgeColor = renderColor(topic);
 	return (
 		<Tr>

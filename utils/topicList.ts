@@ -1,3 +1,4 @@
+// List of topics
 export const topicList: string[] = [
 	'Pre-Algebra',
 	'Algebra 1',

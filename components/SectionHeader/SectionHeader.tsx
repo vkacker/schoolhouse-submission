@@ -1,4 +1,7 @@
+// React Imports
 import React, { FC } from 'react';
+
+// UI Imports
 import {
 	Flex,
 	Text,
@@ -10,6 +13,7 @@ import {
 } from '@chakra-ui/react';
 import { AddIcon, RepeatIcon } from '@chakra-ui/icons';
 
+// Interface for Props
 interface SectionHeaderProps {
 	addModal: boolean;
 	setAddModal: React.Dispatch<React.SetStateAction<boolean>>;

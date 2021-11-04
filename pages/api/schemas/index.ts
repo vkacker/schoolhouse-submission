@@ -1,4 +1,6 @@
+// GraphQL Import
 import { gql } from 'apollo-server-micro';
+
 export const typeDefs = gql`
 	# Creating a type "Submission"
 	type Submission {

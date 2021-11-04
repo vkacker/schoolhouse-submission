@@ -1,6 +1,10 @@
-import { Input, Box, Grid, Select, Text } from '@chakra-ui/react';
+// React Imports
 import React, { FC, ChangeEventHandler } from 'react';
 
+// UI Imports
+import { Input, Box, Grid, Select, Text } from '@chakra-ui/react';
+
+// Utils Import
 import { topicList } from '../../../utils/topicList';
 
 // Type for Submission
