@@ -1,14 +1,11 @@
 import React, { FC } from 'react';
 import {
 	Flex,
-	Heading,
 	Text,
 	Button,
-	Spacer,
 	Stack,
 	Box,
 	HStack,
-	VStack,
 	Container,
 } from '@chakra-ui/react';
 import { AddIcon, RepeatIcon } from '@chakra-ui/icons';

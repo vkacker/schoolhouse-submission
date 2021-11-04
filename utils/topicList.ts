@@ -1,4 +1,4 @@
-export const topicList = [
+export const topicList: string[] = [
 	'Pre-Algebra',
 	'Algebra 1',
 	'Algebra 2',

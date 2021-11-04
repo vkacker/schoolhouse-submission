@@ -8,20 +8,13 @@ import {
 	ModalCloseButton,
 	ModalBody,
 	ModalFooter,
-	Button,
-	Table,
-	Thead,
-	Tbody,
-	Tr,
-	Th,
-	Td,
 	Center,
 	Box,
 	CircularProgress,
-	Badge,
 } from '@chakra-ui/react';
-import { ApolloClient, InMemoryCache, gql, useQuery } from '@apollo/client';
-import { renderColor } from '../../utils/renderColor';
+import { ApolloClient, InMemoryCache, gql } from '@apollo/client';
+
+import TableComponent from './TableComponent/TableComponent';
 
 // Interface
 interface CandidatePairModalProps {
@@ -76,8 +69,10 @@ const CandidatePairModal: FC<CandidatePairModalProps> = ({
 			size='xl'
 		>
 			<ModalOverlay />
-			<ModalContent maxW='750px'>
-				<ModalHeader>Candidate Pairs</ModalHeader>
+			<ModalContent maxW='800px' maxH='800px'>
+				<ModalHeader fontSize='2.2rem'>
+					<Center>Candidate Pairs</Center>
+				</ModalHeader>
 				<ModalCloseButton />
 				<ModalBody>
 					<Center>
@@ -92,48 +87,7 @@ const CandidatePairModal: FC<CandidatePairModalProps> = ({
 							{pairs == undefined ? (
 								<CircularProgress isIndeterminate color='blue.300' />
 							) : (
-								<Table variant='simple' size='sm'>
-									<Thead>
-										<Tr>
-											<Th>Reviewer</Th>
-											<Th>Reviewee</Th>
-											<Th>Topic</Th>
-											<Th>Valid Pair</Th>
-										</Tr>
-									</Thead>
-									<Tbody>
-										{pairs.map((pair: any, index: number) => {
-											const topicColor = renderColor(pair.topic);
-											const validColor = pair.validPair ? 'green' : 'red';
-											return (
-												<Tr key={index}>
-													<Td>{pair.reviewer}</Td>
-													<Td>{pair.reviewee}</Td>
-													<Td>
-														<Badge
-															p='2'
-															rounded='md'
-															fontSize='0.8rem'
-															colorScheme={topicColor}
-														>
-															{pair.topic}
-														</Badge>
-													</Td>
-													<Td>
-														<Badge
-															p='2'
-															rounded='md'
-															fontSize='0.8rem'
-															colorScheme={validColor}
-														>
-															{pair.validPair ? 'True' : 'False'}
-														</Badge>
-													</Td>
-												</Tr>
-											);
-										})}
-									</Tbody>
-								</Table>
+								<TableComponent pairs={pairs} />
 							)}
 						</Box>
 					</Center>

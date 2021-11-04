@@ -34,12 +34,12 @@ const TableRow: FC<TableRowProps> = ({ subID, topic, sessionLink, email }) => {
 				</Badge>
 			</Td>
 			<Td>
-				<Link color='blue.300' isExternal>
+				<Link color='blue.300' isExternal href={`https://${sessionLink}`}>
 					{sessionLink} <ExternalLinkIcon mx='2px' />
 				</Link>
 			</Td>
 			<Td>
-				<Link color='blue.300' isExternal>
+				<Link color='blue.300' isExternal href={`mailto:${email}`}>
 					{email} <ExternalLinkIcon mx='2px' />
 				</Link>
 			</Td>

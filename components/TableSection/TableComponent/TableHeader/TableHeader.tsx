@@ -1,18 +1,6 @@
 import React from 'react';
 
-import {
-	Center,
-	Box,
-	Table,
-	Thead,
-	Tbody,
-	Tr,
-	Th,
-	Td,
-	Badge,
-	Text,
-	Link,
-} from '@chakra-ui/react';
+import { Thead, Tr, Th, Text } from '@chakra-ui/react';
 
 const TableHeader = () => {
 	return (

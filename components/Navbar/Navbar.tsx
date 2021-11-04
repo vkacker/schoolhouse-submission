@@ -1,5 +1,5 @@
 import React from 'react';
-import { Flex, Text } from '@chakra-ui/react';
+import { Flex } from '@chakra-ui/react';
 import Logo from './Logo/Logo';
 
 const Navbar = () => {
@@ -12,12 +12,12 @@ const Navbar = () => {
 			width='100%'
 			color='gray.600'
 			bg='white'
-			minH='60px'
+			minH='58px'
 			py={2}
 			px={4}
 		>
 			<Flex flex={{ base: 1 }} justify={{ base: 'center', md: 'start' }}>
-				<Logo style={{ fontSize: '120px' }} />
+				<Logo />
 			</Flex>
 		</Flex>
 	);

@@ -7,8 +7,3 @@ export const SubmissionContext = createContext<{
 	submissions: [],
 	setSubmissions: () => {},
 });
-
-// export const SubmissionContext = createContext({
-// 	submissions: [],
-// 	setSubmissions: (value: any) => void,
-// });

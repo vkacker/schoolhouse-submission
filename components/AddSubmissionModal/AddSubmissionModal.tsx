@@ -1,9 +1,8 @@
-import React, { useState, useContext, useEffect } from 'react';
+// React Imports
+import React, { FC, useState, useContext } from 'react';
 
+// UI Imports
 import {
-	FormControl,
-	FormLabel,
-	FormErrorMessage,
 	Modal,
 	ModalOverlay,
 	ModalContent,
@@ -13,20 +12,16 @@ import {
 	ModalFooter,
 	Button,
 	Center,
-	Box,
-	Grid,
-	Text,
-	Input,
-	Select,
-	Spacer,
 	useToast,
+	HStack,
 } from '@chakra-ui/react';
+import Form from './Form/Form';
 
+// Context Imports
 import { SubmissionContext } from '../../context/context';
-import { topicList } from '../../utils/topicList';
 
+// GraphQL Imports
 import { gql, useMutation } from '@apollo/client';
-import { NextPage } from 'next';
 
 const ADD_SUBMISSION = gql`
 	mutation AddSubmissionMutation(
@@ -49,28 +44,32 @@ const ADD_SUBMISSION = gql`
 	}
 `;
 
-// Interface
+// Interface for Props
 interface AddSubmissionModalProps {
 	addModal: boolean;
 	setAddModal: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-// Interface for Submissions
-interface Submission {
+// Type for Submission
+type Submission = {
 	subID: string;
 	topic: string;
 	sessionLink: string | number | readonly string[] | undefined;
 	email: string | number | readonly string[] | undefined;
-}
+};
 
-// Interface
-
-const AddSubmissionModal: NextPage<AddSubmissionModalProps> = ({
+const AddSubmissionModal: FC<AddSubmissionModalProps> = ({
 	addModal,
 	setAddModal,
 }) => {
+	/**
+	 * State and Hook Declarations
+	 */
+
+	// State for Submission
 	const { submissions, setSubmissions } = useContext<any>(SubmissionContext);
 
+	// State for New Submission
 	const [newSubmission, setNewSubmission] = useState<Submission>({
 		subID: `sub${submissions.length + 1}`,
 		topic: '',
@@ -78,8 +77,12 @@ const AddSubmissionModal: NextPage<AddSubmissionModalProps> = ({
 		email: undefined,
 	});
 
+	// Instantiating Hook for displaying error message
 	const toast = useToast();
 
+	/**
+	 * GraphQL Declarations
+	 */
 	const [addSubmission] = useMutation(ADD_SUBMISSION, {
 		variables: {
 			subID: `sub${submissions.length + 1}`,
@@ -112,6 +115,7 @@ const AddSubmissionModal: NextPage<AddSubmissionModalProps> = ({
 		},
 	});
 
+	// Event Handlers
 	const onChange = (e: any) => {
 		setNewSubmission({ ...newSubmission, [e.target.id]: e.target.value });
 	};
@@ -135,76 +139,29 @@ const AddSubmissionModal: NextPage<AddSubmissionModalProps> = ({
 	return (
 		<Modal isOpen={addModal} onClose={() => setAddModal(!addModal)} isCentered>
 			<ModalOverlay />
-			<ModalContent maxW='750px'>
+			<ModalContent maxW='800px' maxH='800px'>
 				<ModalBody>
-					<ModalHeader>Add Submission</ModalHeader>
+					<ModalHeader fontSize='2.2rem'>
+						<Center>Add Submission</Center>
+					</ModalHeader>
 					<ModalCloseButton />
 					<Center>
-						<Box
-							w='100%'
-							borderWidth='3px'
-							maxH='500px'
-							borderRadius='lg'
-							mt='25px'
-						>
-							<Grid templateColumns='repeat(2, 2fr)' gap={6} p={4} py={8}>
-								<Box>
-									<Text fontWeight='bold'>Submission ID</Text>
-									<Input
-										variant='filled'
-										value={newSubmission.subID}
-										isDisabled
-									/>
-								</Box>
-								<Box>
-									<Text fontWeight='bold'>Topic</Text>
-									<Select
-										placeholder='Select Topic'
-										onChange={onChange}
-										id='topic'
-									>
-										{topicList.map((topic) => {
-											return (
-												<option key={topic} value={topic}>
-													{topic}
-												</option>
-											);
-										})}
-									</Select>
-								</Box>
-								<Box>
-									<Text fontWeight='bold'>Session Link</Text>
-									<Input
-										variant='outline'
-										placeholder='Enter session link'
-										id='sessionLink'
-										value={newSubmission.sessionLink}
-										onChange={onChange}
-									/>
-								</Box>
-								<Box>
-									<Text fontWeight='bold'>Candidate E-Mail</Text>
-									<Input
-										variant='outline'
-										placeholder='Enter canidate e-mail'
-										id='email'
-										type='text'
-										value={newSubmission.email}
-										onChange={onChange}
-									/>
-								</Box>
-							</Grid>
-						</Box>
+						<Form newSubmission={newSubmission} onChange={onChange} />
 					</Center>
 				</ModalBody>
 				<ModalFooter>
-					<Button colorScheme='red' variant='outline'>
-						Cancel
-					</Button>
-					<Spacer />
-					<Button colorScheme='green' onClick={addSubmissionHandler}>
-						Confirm
-					</Button>
+					<HStack spacing={8}>
+						<Button
+							colorScheme='red'
+							variant='outline'
+							onClick={() => setAddModal(!addModal)}
+						>
+							Cancel
+						</Button>
+						<Button colorScheme='green' onClick={addSubmissionHandler}>
+							Confirm
+						</Button>
+					</HStack>
 				</ModalFooter>
 			</ModalContent>
 		</Modal>
