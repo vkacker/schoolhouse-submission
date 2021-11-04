@@ -43,7 +43,8 @@ const Home: NextPage = () => {
 	useEffect(() => {
 		const fetchSubmissions = async () => {
 			const client = new ApolloClient({
-				uri: 'http://localhost:3000/api/graphql',
+				uri: 'https://polar-ravine-66624.herokuapp.com/api/graphql',
+				// uri: 'http://localhost:3000/api/graphql',
 				cache: new InMemoryCache(),
 			});
 

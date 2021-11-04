@@ -45,7 +45,8 @@ const CandidatePairModal: FC<CandidatePairModalProps> = ({
 	useEffect(() => {
 		const fetchData = async () => {
 			const client = new ApolloClient({
-				uri: 'http://localhost:3000/api/graphql',
+				uri: 'https://polar-ravine-66624.herokuapp.com/api/graphql',
+				// uri: 'http://localhost:3000/api/graphql',
 				cache: new InMemoryCache(),
 			});
 			const { data } = await client.query({
